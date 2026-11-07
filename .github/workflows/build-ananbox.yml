@@ -5,6 +5,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - name: Checkout (with the anbox submodule)
         uses: actions/checkout@v4
@@ -15,6 +16,16 @@ jobs:
         with:
           distribution: temurin
           java-version: '11'
+
+      - name: Host tools (clang for the build scripts, ccache for speed)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq clang lld ccache ninja-build
+          which clang clang++ || true
+          # CMakeLists hardcodes /usr/bin/clang - make sure it exists
+          if [ ! -e /usr/bin/clang ]; then sudo ln -sf "$(which clang)" /usr/bin/clang; fi
+          if [ ! -e /usr/bin/clang++ ]; then sudo ln -sf "$(which clang++)" /usr/bin/clang++; fi
+          ls -l /usr/bin/clang /usr/bin/clang++
 
       - name: Install Android SDK + NDK + CMake
         run: |
@@ -41,17 +52,25 @@ jobs:
           fi
           echo "submodule ok"
 
+      - name: Only build arm64 (halves the time)
+        run: |
+          sed -i "s/abiFilters .*/abiFilters 'arm64-v8a'/" app/build.gradle
+          grep -n "abiFilters" app/build.gradle
+
       - name: Build
         run: |
           chmod +x gradlew
+          export CCACHE_DIR=$HOME/.ccache
+          export CCACHE_MAXSIZE=2G
+          export PATH="/usr/lib/ccache:$PATH"
           set +e
           ./gradlew --no-daemon assembleDebug > build.log 2>&1
           rc=$?
           if [ $rc -ne 0 ]; then
             echo "--- errors ---"
-            grep -nE "error:|FAILURE:|Caused by|CMake Error|e: |What went wrong" build.log | head -40 | while IFS= read -r l; do echo "::error::$l"; done
-            echo "--- last 60 lines ---"
-            tail -60 build.log
+            grep -nE "error:|FAILURE:|Caused by|CMake Error|e: |What went wrong|No such file" build.log | head -40 | while IFS= read -r l; do echo "::error::$l"; done
+            echo "--- last 80 lines ---"
+            tail -80 build.log
             exit $rc
           fi
           ls -lh app/build/outputs/apk/debug/
