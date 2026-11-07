@@ -1,0 +1,70 @@
+name: Build Ananbox APK
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with the anbox submodule)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Install Android SDK + NDK + CMake
+        run: |
+          set -e
+          SDK=$HOME/android-sdk
+          mkdir -p "$SDK/cmdline-tools"
+          cd "$SDK"
+          curl -sSLo clt.zip https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+          unzip -q clt.zip -d cmdline-tools
+          mv cmdline-tools/cmdline-tools cmdline-tools/latest
+          yes | cmdline-tools/latest/bin/sdkmanager --sdk_root="$SDK" --licenses > /dev/null || true
+          cmdline-tools/latest/bin/sdkmanager --sdk_root="$SDK" \
+            "platforms;android-33" "build-tools;33.0.2" "cmake;3.22.1" "ndk;25.1.8937393"
+          echo "ANDROID_HOME=$SDK" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$SDK" >> $GITHUB_ENV
+          echo "sdk.dir=$SDK" > local.properties
+
+      - name: Check the submodule arrived
+        run: |
+          if [ ! -f app/src/main/cpp/anbox/CMakeLists.txt ]; then
+            echo "::error::submodule app/src/main/cpp/anbox is empty - check .gitmodules"
+            ls -la app/src/main/cpp || true
+            exit 1
+          fi
+          echo "submodule ok"
+
+      - name: Build
+        run: |
+          chmod +x gradlew
+          set +e
+          ./gradlew --no-daemon assembleDebug > build.log 2>&1
+          rc=$?
+          if [ $rc -ne 0 ]; then
+            echo "--- errors ---"
+            grep -nE "error:|FAILURE:|Caused by|CMake Error|e: |What went wrong" build.log | head -40 | while IFS= read -r l; do echo "::error::$l"; done
+            echo "--- last 60 lines ---"
+            tail -60 build.log
+            exit $rc
+          fi
+          ls -lh app/build/outputs/apk/debug/
+
+      - name: Publish APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Ananbox build ${{ github.run_number }}
+          files: app/build/outputs/apk/debug/*.apk
+          prerelease: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ananbox-apk
+          path: app/build/outputs/apk/debug/*.apk
