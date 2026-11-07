@@ -12,10 +12,11 @@ jobs:
         with:
           submodules: recursive
 
+      # cmdline-tools (13114758) needs JDK 17 to run
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '11'
+          java-version: '17'
 
       - name: Host tools (clang for the build scripts, ccache for speed)
         run: |
@@ -42,6 +43,12 @@ jobs:
           echo "ANDROID_HOME=$SDK" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=$SDK" >> $GITHUB_ENV
           echo "sdk.dir=$SDK" > local.properties
+
+      # AGP 7.3.1 + Gradle 7.4 want JDK 11
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
 
       - name: Check the submodule arrived
         run: |
