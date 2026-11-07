@@ -78,6 +78,21 @@ jobs:
           sed -i "s/abiFilters .*/abiFilters 'arm64-v8a'/" app/build.gradle
           grep -n "abiFilters" app/build.gradle
 
+      - name: Disable proot's python extension (host Python breaks the cross build)
+        run: |
+          python3 - <<'EOF'
+          p = 'app/src/main/cpp/cmake/Proot.cmake'
+          s = open(p).read()
+          if 'HAS_PYTHON_CONFIG=' in s:
+              print('already patched')
+          else:
+              s = s.replace('LDFLAGS=${PROOT_LINKER_FLAGS}',
+                            'LDFLAGS=${PROOT_LINKER_FLAGS} HAS_PYTHON_CONFIG= HAS_SWIG=')
+              open(p, 'w').write(s)
+              print('patched Proot.cmake')
+          EOF
+          grep -n "HAS_PYTHON_CONFIG" app/src/main/cpp/cmake/Proot.cmake
+
       - name: Build
         run: |
           chmod +x gradlew
