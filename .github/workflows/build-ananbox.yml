@@ -59,6 +59,20 @@ jobs:
           fi
           echo "submodule ok"
 
+      - name: Pre-fetch Boost (works around the broken RENAME in cmake/Boost.cmake)
+        run: |
+          set -e
+          cd app/src/main/cpp
+          if [ ! -d boost ]; then
+            echo "downloading boost 1.83.0"
+            curl -sSLo boost.tar.xz https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.xz
+            tar -xf boost.tar.xz
+            mv boost-1.83.0 boost
+            rm -f boost.tar.xz
+          fi
+          test -f boost/CMakeLists.txt || { echo "::error::boost tree is not where CMake expects it"; exit 1; }
+          du -sh boost
+
       - name: Only build arm64 (halves the time)
         run: |
           sed -i "s/abiFilters .*/abiFilters 'arm64-v8a'/" app/build.gradle
