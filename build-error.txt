@@ -1,0 +1,117 @@
+run: 42366527450
+
+=== real errors ===
+942:C/C++: /usr/include/python3.12/pyconfig.h:9:12: fatal error: 'aarch64-linux-gnu/python3.12/pyconfig.h' file not found
+3862:  FAILED: proot-prefix/src/proot-stamp/proot-build /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/proot-prefix/src/proot-stamp/proot-build 
+3990:  /usr/include/python3.12/pyconfig.h:9:12: fatal error: 'aarch64-linux-gnu/python3.12/pyconfig.h' file not found
+4241:  ninja: build stopped: subcommand failed.
+
+=== context around line 942 ===
+C/C++: ./path/glue.c:76:14: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./path/temp.c:41:33: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./path/temp.c:292:13: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./syscall/enter.c:513:25: warning: implicit declaration of function 'insort_binding3' is invalid in C99 [-Wimplicit-function-declaration]
+C/C++: ./syscall/enter.c:513:73: warning: comparison between pointer and integer ('int' and 'void *') [-Wpointer-integer-compare]
+C/C++: ./tracee/tracee.c:409:31: warning: implicit declaration of function 'peek_word' is invalid in C99 [-Wimplicit-function-declaration]
+C/C++: ./loader/loader.c:261:5: warning: inline asm clobber list contains reserved registers: SP [-Winline-asm]
+C/C++: ./loader/assembly-arm64.h:32:3: note: expanded from macro 'BRANCH'
+C/C++: <inline asm>:1:1: note: instantiated into assembly here
+C/C++: ./loader/loader.c:261:5: note: Reserved registers on the clobber list may not be preserved across the asm statement, and clobbering them may lead to undefined behaviour.
+C/C++: ./loader/assembly-arm64.h:32:3: note: expanded from macro 'BRANCH'
+C/C++: <inline asm>:1:1: note: instantiated into assembly here
+C/C++: In file included from ./extension/python/python.c:4:
+C/C++: In file included from /usr/include/python3.12/Python.h:12:
+C/C++: /usr/include/python3.12/pyconfig.h:9:12: fatal error: 'aarch64-linux-gnu/python3.12/pyconfig.h' file not found
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_helper.cpp:18:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_helper.h:23:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_helper.cpp:28:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:19:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/logger.h:27:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/utils.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:21:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/message_receiver.h:28:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:22:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/message_sender.h:25:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.h:22:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/connections.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.h:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/message_processor.h:23:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/common/small_vector.h:48:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.h:23:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/message_processor.h:25:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:23:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.h:31:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_connection.cpp:36:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.cpp:18:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/base_socket_messenger.h:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_messenger.h:24:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/credentials.h:23:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.cpp:18:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/base_socket_messenger.h:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_messenger.h:25:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/message_receiver.h:28:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.cpp:18:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.h:21:
+
+=== last 50 lines ===
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.h:21:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/base_socket_messenger.h:28:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/qemu/adb_message_processor.cpp:18:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/qemu/adb_message_processor.h:25:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/tcp_socket_messenger.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/qemu/adb_message_processor.cpp:19:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/delegate_connection_creator.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/qemu/adb_message_processor.cpp:20:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/delegate_message_processor.h:25:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/qemu/adb_message_processor.cpp:22:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/utils.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::utils {
+                 ^~~~~~~
+                  { namespace utils
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/qemu/adb_message_processor.cpp:46:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::qemu {
+                 ^~~~~~
+                  { namespace qemu
+  17 warnings generated.
+  ninja: build stopped: subcommand failed.
+  
+  C++ build system [build] failed while executing:
+      /home/runner/android-sdk/cmake/3.22.1/bin/ninja \
+        -C \
+        /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a \
+        anbox \
+        proot
+    from /home/runner/work/haseeb/haseeb/app
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 2m 4s
+25 actionable tasks: 25 executed
