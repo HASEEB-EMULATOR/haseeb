@@ -1,100 +1,101 @@
-run: 42370014532
+run: 42370466722
 
 === real errors ===
-4916:  FAILED: talloc-prefix/src/talloc-stamp/talloc-download /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-stamp/talloc-download 
-4923:  CMake Error at talloc-stamp/download-talloc.cmake:170 (message):
-5773:  ninja: build stopped: subcommand failed.
+645:C/C++: ./tracee/event.c:458:45: error: too many arguments to function call, expected 3, have 4
+2851:  FAILED: proot-prefix/src/proot-stamp/proot-build /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/proot-prefix/src/proot-stamp/proot-build 
+2942:  ./tracee/event.c:458:45: error: too many arguments to function call, expected 3, have 4
+3176:  ninja: build stopped: subcommand failed.
 
-=== context around line 4916 ===
-  [293/312] Building CXX object anbox/src/CMakeFiles/anbox-core.dir/anbox/cli.cpp.o
-  [294/312] Building CXX object anbox/src/CMakeFiles/anbox-core.dir/anbox/runtime.cpp.o
-  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/runtime.cpp:20:
-  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/logger.h:27:
-  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/utils.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
-  namespace anbox::utils {
-                 ^~~~~~~
-                  { namespace utils
-  1 warning generated.
-  [295/312] Building CXX object anbox/src/CMakeFiles/anbox-core.dir/anbox/logger.cpp.o
-  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/logger.cpp:33:
-  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/logger.h:27:
-  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/utils.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
-  namespace anbox::utils {
-                 ^~~~~~~
-                  { namespace utils
-  1 warning generated.
-  [296/312] Linking CXX static library anbox/src/libanbox-core.a
-  [297/312] Linking CXX shared library /home/runner/work/haseeb/haseeb/app/build/intermediates/cxx/Debug/2m3v2662/obj/arm64-v8a/libanbox.so
-  [298/312] Performing download step (download, verify and extract) for 'talloc'
-  FAILED: talloc-prefix/src/talloc-stamp/talloc-download /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-stamp/talloc-download 
-  cd /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src && /home/runner/android-sdk/cmake/3.22.1/bin/cmake -P /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-stamp/download-talloc.cmake && /home/runner/android-sdk/cmake/3.22.1/bin/cmake -P /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-stamp/verify-talloc.cmake && /home/runner/android-sdk/cmake/3.22.1/bin/cmake -P /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-stamp/extract-talloc.cmake && /home/runner/android-sdk/cmake/3.22.1/bin/cmake -E touch /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-stamp/talloc-download
-  -- Downloading...
-     dst='/home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-2.4.1.tar.gz'
-     timeout='none'
-     inactivity timeout='none'
-  -- Using src='https://download.samba.org/pub/talloc/talloc-2.4.1.tar.gz'
-  CMake Error at talloc-stamp/download-talloc.cmake:170 (message):
-    Each download failed!
-  
-      error: downloading 'https://download.samba.org/pub/talloc/talloc-2.4.1.tar.gz' failed
-            status_code: 56
-            status_string: "Failure when receiving data from the peer"
-            log:
-            --- LOG BEGIN ---
-              Trying 144.76.82.148:443...
-  
-    Connected to download.samba.org (144.76.82.148) port 443 (#0)
-  
-    ALPN, offering h2
-  
-    ALPN, offering http/1.1
-  
-    successfully set certificate verify locations:
-  
-     CAfile: /etc/ssl/certs/ca-certificates.crt
-     CApath: /etc/ssl/certs
-  
-    [5 bytes data]
-  
-    TLSv1.3 (OUT), TLS handshake, Client hello (1):
-  
-    [512 bytes data]
-  
-    [5 bytes data]
-  
+=== context around line 645 ===
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/opengles_message_processor.h:26:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/buffered_io_stream.h:29:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/opengles_socket_connection.cpp:23:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/opengles_socket_connection.h:27:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/opengles_message_processor.h:37:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: ./execve/enter.c:529:30: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./path/glue.c:76:14: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./path/temp.c:41:33: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./path/temp.c:292:13: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+C/C++: /home/runner/work/haseeb/haseeb/app/.cxx/Debug/2m3v2662/arm64-v8a/talloc-prefix/src/talloc-build/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+C/C++: ./syscall/enter.c:521:25: warning: implicit declaration of function 'insort_binding3' is invalid in C99 [-Wimplicit-function-declaration]
+C/C++: ./syscall/enter.c:521:73: warning: comparison between pointer and integer ('int' and 'void *') [-Wpointer-integer-compare]
+C/C++: ./tracee/tracee.c:409:31: warning: implicit declaration of function 'peek_word' is invalid in C99 [-Wimplicit-function-declaration]
+C/C++: ./tracee/event.c:458:45: error: too many arguments to function call, expected 3, have 4
+C/C++: ./tracee/reg.h:49:13: note: 'poke_reg' declared here
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/emugl/DisplayManager.cpp:18:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/emugl/DisplayManager.h:24:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/emugl/DisplayManager.cpp:20:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:18:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/layer_composer.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/renderer.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/emugl/Renderable.h:20:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/rect.h:25:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:18:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/layer_composer.h:21:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/renderer.h:25:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:18:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.h:21:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/layer_composer.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/layer_composer.h:31:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:18:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.h:25:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:19:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/manager.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/window.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/window_state.h:22:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/display.h:23:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:19:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/manager.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/window.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/window_state.h:23:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/stack.h:23:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/graphics/single_window_composer_strategy.cpp:19:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/manager.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/window.h:21:
+C/C++: In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/window_state.h:24:
+C/C++: /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/wm/task.h:23:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
 
 === last 50 lines ===
-    [5 bytes data]
-  
-    [1 bytes data]
-  
-    [5 bytes data]
-  
-    [1 bytes data]
-  
-    REFUSED_STREAM, retrying a fresh connect
-  
-    Connection died, tried 5 times before giving up
-  
-    stopped the pause stream!
-  
-    Closing connection 5
-  
-    [5 bytes data]
-  
-    [1 bytes data]
-  
-    TLSv1.3 (OUT), TLS alert, close notify (256):
-  
-    [2 bytes data]
-  
-    
-  
-            --- LOG END ---
-            
-      
-  
-  
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/input/device.cpp:22:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/local_socket_messenger.h:21:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/base_socket_messenger.h:23:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_messenger.h:24:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/credentials.h:23:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/input/device.cpp:22:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/local_socket_messenger.h:21:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/base_socket_messenger.h:23:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/socket_messenger.h:28:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/input/device.cpp:22:
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/local_socket_messenger.h:21:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/base_socket_messenger.h:28:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  In file included from /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/input/device.cpp:22:
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/network/local_socket_messenger.h:26:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::network {
+                 ^~~~~~~~~
+                  { namespace network
+  /home/runner/work/haseeb/haseeb/app/src/main/cpp/anbox/src/anbox/input/device.cpp:27:16: warning: nested namespace definition is a C++17 extension; define each namespace separately [-Wc++17-extensions]
+  namespace anbox::input {
+                 ^~~~~~~
+                  { namespace input
+  18 warnings generated.
   ninja: build stopped: subcommand failed.
   
   C++ build system [build] failed while executing:
@@ -112,5 +113,5 @@ run: 42370014532
 
 * Get more help at https://help.gradle.org
 
-BUILD FAILED in 3m 38s
+BUILD FAILED in 2m 24s
 27 actionable tasks: 27 executed
