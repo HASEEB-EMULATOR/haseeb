@@ -39,7 +39,7 @@ jobs:
           mv cmdline-tools/cmdline-tools cmdline-tools/latest
           yes | cmdline-tools/latest/bin/sdkmanager --sdk_root="$SDK" --licenses > /dev/null || true
           cmdline-tools/latest/bin/sdkmanager --sdk_root="$SDK" \
-            "platforms;android-33" "build-tools;33.0.2" "cmake;3.22.1" "ndk;25.1.8937393"
+            "platforms;android-33" "build-tools;33.0.2" "cmake;3.22.1" "ndk;23.1.7779620"
           echo "ANDROID_HOME=$SDK" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=$SDK" >> $GITHUB_ENV
           echo "sdk.dir=$SDK" > local.properties
@@ -88,10 +88,16 @@ jobs:
           ./gradlew --no-daemon assembleDebug > build.log 2>&1
           rc=$?
           if [ $rc -ne 0 ]; then
-            echo "--- errors ---"
-            grep -nE "error:|FAILURE:|Caused by|CMake Error|e: |What went wrong|No such file" build.log | head -40 | while IFS= read -r l; do echo "::error::$l"; done
-            echo "--- last 80 lines ---"
-            tail -80 build.log
+            echo "--- real errors ---"
+            grep -nE "(^|: )error:|fatal error:|FAILED:|CMake Error|undefined reference|ninja: build stopped" build.log \
+              | grep -v "note:" | head -25 | while IFS= read -r l; do echo "::error::$l"; done
+            n=$(grep -nE "(^|: )error:|fatal error:|FAILED:|undefined reference" build.log | grep -v "note:" | head -1 | cut -d: -f1)
+            if [ -n "$n" ]; then
+              echo "--- context around first error (line $n) ---"
+              sed -n "$(( n > 10 ? n - 10 : 1 )),$(( n + 25 ))p" build.log
+            fi
+            echo "--- last 40 lines ---"
+            tail -40 build.log
             exit $rc
           fi
           ls -lh app/build/outputs/apk/debug/
