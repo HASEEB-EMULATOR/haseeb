@@ -73,36 +73,9 @@ jobs:
           test -f boost/CMakeLists.txt || { echo "::error::boost tree is not where CMake expects it"; exit 1; }
           du -sh boost
 
-      - name: Patch proot so guest sched_* calls stop dying with SIGSYS
+      - name: Patch proot so Android's seccomp filter cannot kill the guest
         run: |
-          cat > app/src/main/cpp/patch-proot.sh <<'EOS'
-          #!/bin/sh
-          # Android's seccomp filter answers sched_setscheduler/param/attr and setpriority
-          # with SIGSYS inside an app, which kills the guest's zygote. Make proot answer 0.
-          set -e
-          f=src/syscall/enter.c
-          [ -f "$f" ] || { echo "enter.c missing"; exit 1; }
-          if grep -q "PR_sched_setscheduler" "$f"; then echo "already patched"; exit 0; fi
-          python3 - "$f" <<'EOF'
-          import sys
-          p = sys.argv[1]
-          s = open(p).read()
-          needle = "\tswitch (syscall_number) {\n"
-          add = ("\tcase PR_sched_setscheduler:\n"
-                 "\tcase PR_sched_setparam:\n"
-                 "\tcase PR_sched_setattr:\n"
-                 "\tcase PR_setpriority:\n"
-                 "\t\t/* the host seccomp filter answers these with SIGSYS */\n"
-                 "\t\tset_sysnum(tracee, PR_void);\n"
-                 "\t\tstatus = 0;\n"
-                 "\t\tbreak;\n")
-          if needle not in s:
-              print("switch statement not found"); sys.exit(1)
-          s = s.replace(needle, needle + add, 1)
-          open(p, "w").write(s)
-          print("patched enter.c")
-          EOF
-          EOS
+          echo 'IyEvYmluL3NoCiMgTWFrZSBwcm9vdCBzdXJ2aXZlIEFuZHJvaWQncyBhcHAgc2VjY29tcCBmaWx0ZXI6CiMgICAxKSBzY2hlZF8qIC8gc2V0cHJpb3JpdHkgYXJlIHJlZnVzZWQgd2l0aCBTSUdTWVMgLT4gYW5zd2VyIDAgaW5zaWRlIHByb290CiMgICAyKSBhbnkgb3RoZXIgcmVmdXNlZCBzeXNjYWxsIC0+IHN1cHByZXNzIHRoZSBzaWduYWwgYW5kIHJlcG9ydCBzdWNjZXNzCnNldCAtZQpweXRob24zIC0gPDwnRU9GJwppbXBvcnQgc3lzCgpkZWYgcGF0Y2gocGF0aCwgbmVlZGxlLCBhZGQsIG1hcmtlciwgYWZ0ZXI9RmFsc2UpOgogICAgcyA9IG9wZW4ocGF0aCkucmVhZCgpCiAgICBpZiBtYXJrZXIgaW4gczoKICAgICAgICBwcmludCgiICBhbHJlYWR5IHBhdGNoZWQ6IiwgcGF0aCk7IHJldHVybgogICAgaWYgbmVlZGxlIG5vdCBpbiBzOgogICAgICAgIHByaW50KCIgIEFOQ0hPUiBNSVNTSU5HIGluIiwgcGF0aCk7IHN5cy5leGl0KDEpCiAgICBzID0gcy5yZXBsYWNlKG5lZWRsZSwgKG5lZWRsZSArIGFkZCkgaWYgYWZ0ZXIgZWxzZSAoYWRkICsgbmVlZGxlKSwgMSkKICAgIG9wZW4ocGF0aCwgInciKS53cml0ZShzKQogICAgcHJpbnQoIiAgcGF0Y2hlZDoiLCBwYXRoKQoKIyAtLS0gMS4gZW50ZXIuYzogaGFuZGxlIHNjaGVkXyogb3Vyc2VsdmVzLCBiZWZvcmUgdGhlIGhvc3QgZXZlciBzZWVzIHRoZW0gLS0tCnBhdGNoKCJzcmMvc3lzY2FsbC9lbnRlci5jIiwKICAgICAgIlx0c3dpdGNoIChzeXNjYWxsX251bWJlcikge1xuIiwKICAgICAgKCJcdGNhc2UgUFJfc2NoZWRfc2V0c2NoZWR1bGVyOlxuIgogICAgICAgIlx0Y2FzZSBQUl9zY2hlZF9zZXRwYXJhbTpcbiIKICAgICAgICJcdGNhc2UgUFJfc2NoZWRfc2V0YXR0cjpcbiIKICAgICAgICJcdGNhc2UgUFJfc2V0cHJpb3JpdHk6XG4iCiAgICAgICAiXHRcdC8qIHRoZSBob3N0IHNlY2NvbXAgZmlsdGVyIGFuc3dlcnMgdGhlc2Ugd2l0aCBTSUdTWVMgaW5zaWRlIGFuIGFwcCAqL1xuIgogICAgICAgIlx0XHRzZXRfc3lzbnVtKHRyYWNlZSwgUFJfdm9pZCk7XG4iCiAgICAgICAiXHRcdHN0YXR1cyA9IDA7XG4iCiAgICAgICAiXHRcdGJyZWFrO1xuIiksCiAgICAgICJQUl9zY2hlZF9zZXRzY2hlZHVsZXIiLCBhZnRlcj1UcnVlKQoKIyAtLS0gMi4gZXZlbnQuYzogYW55IHN5c2NhbGwgdGhlIGhvc3QgZmlsdGVyIHJlZnVzZXMgYmVjb21lcyBhIHN1Y2Nlc3MgLS0tCnBhdGNoKCJzcmMvdHJhY2VlL2V2ZW50LmMiLAogICAgICAnI2luY2x1ZGUgInRyYWNlZS9ldmVudC5oIlxuJywKICAgICAgJyNpbmNsdWRlICJ0cmFjZWUvcmVnLmgiXG4nLAogICAgICAndHJhY2VlL3JlZy5oJywgYWZ0ZXI9VHJ1ZSkKCnBhdGNoKCJzcmMvdHJhY2VlL2V2ZW50LmMiLAogICAgICAiXHRcdCh2b2lkKSByZXN0YXJ0X3RyYWNlZSh0cmFjZWUsIHNpZ25hbCk7XG4iLAogICAgICAoIlx0XHRpZiAoc2lnaW5mby5zaV9zaWdubyA9PSAzMSAmJiBzaWdpbmZvLnNpX2NvZGUgPT0gMSkge1xuIgogICAgICAgIlx0XHRcdC8qIHNlY2NvbXAgcmVmdXNlZCB0aGlzIHN5c2NhbGw6IHByZXRlbmQgaXQgc3VjY2VlZGVkICovXG4iCiAgICAgICAiXHRcdFx0cG9rZV9yZWcodHJhY2VlLCBDVVJSRU5ULCBTWVNBUkdfUkVTVUxULCAwKTtcbiIKICAgICAgICJcdFx0XHRzaWduYWwgPSAwO1xuIgogICAgICAgIlx0XHR9XG4iKSwKICAgICAgInNlY2NvbXAgcmVmdXNlZCB0aGlzIHN5c2NhbGwiLCBhZnRlcj1GYWxzZSkKRU9GCg==' | base64 -d > app/src/main/cpp/patch-proot.sh
           chmod +x app/src/main/cpp/patch-proot.sh
           python3 - <<'EOF'
           p = 'app/src/main/cpp/cmake/Proot.cmake'
