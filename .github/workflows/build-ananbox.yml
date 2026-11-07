@@ -73,6 +73,50 @@ jobs:
           test -f boost/CMakeLists.txt || { echo "::error::boost tree is not where CMake expects it"; exit 1; }
           du -sh boost
 
+      - name: Patch proot so guest sched_* calls stop dying with SIGSYS
+        run: |
+          cat > app/src/main/cpp/patch-proot.sh <<'EOS'
+          #!/bin/sh
+          # Android's seccomp filter answers sched_setscheduler/param/attr and setpriority
+          # with SIGSYS inside an app, which kills the guest's zygote. Make proot answer 0.
+          set -e
+          f=src/syscall/enter.c
+          [ -f "$f" ] || { echo "enter.c missing"; exit 1; }
+          if grep -q "PR_sched_setscheduler" "$f"; then echo "already patched"; exit 0; fi
+          python3 - "$f" <<'EOF'
+          import sys
+          p = sys.argv[1]
+          s = open(p).read()
+          needle = "\tswitch (syscall_number) {\n"
+          add = ("\tcase PR_sched_setscheduler:\n"
+                 "\tcase PR_sched_setparam:\n"
+                 "\tcase PR_sched_setattr:\n"
+                 "\tcase PR_setpriority:\n"
+                 "\t\t/* the host seccomp filter answers these with SIGSYS */\n"
+                 "\t\tset_sysnum(tracee, PR_void);\n"
+                 "\t\tstatus = 0;\n"
+                 "\t\tbreak;\n")
+          if needle not in s:
+              print("switch statement not found"); sys.exit(1)
+          s = s.replace(needle, needle + add, 1)
+          open(p, "w").write(s)
+          print("patched enter.c")
+          EOF
+          EOS
+          chmod +x app/src/main/cpp/patch-proot.sh
+          python3 - <<'EOF'
+          p = 'app/src/main/cpp/cmake/Proot.cmake'
+          s = open(p).read()
+          if 'patch-proot.sh' in s:
+              print('Proot.cmake already patched')
+          else:
+              s = s.replace("        GIT_SHALLOW 1\n",
+                            "        GIT_SHALLOW 1\n        PATCH_COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/patch-proot.sh\n")
+              open(p, 'w').write(s)
+              print('Proot.cmake patched')
+          EOF
+          grep -n "PATCH_COMMAND" app/src/main/cpp/cmake/Proot.cmake
+
       - name: Only build arm64 (halves the time)
         run: |
           sed -i "s/abiFilters .*/abiFilters 'arm64-v8a'/" app/build.gradle
