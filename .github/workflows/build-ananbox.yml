@@ -102,6 +102,32 @@ jobs:
           fi
           ls -lh app/build/outputs/apk/debug/
 
+      - name: Save the build error into the repo (so it can be read without logs)
+        if: failure()
+        run: |
+          {
+            echo "run: ${{ github.run_id }}"
+            echo
+            echo "=== real errors ==="
+            grep -nE "(^|: )error:|fatal error:|FAILED:|CMake Error|undefined reference|ninja: build stopped" build.log 2>/dev/null \
+              | grep -v "note:" | head -40
+            echo
+            n=$(grep -nE "(^|: )error:|fatal error:|FAILED:|undefined reference" build.log 2>/dev/null | grep -v "note:" | head -1 | cut -d: -f1)
+            if [ -n "$n" ]; then
+              echo "=== context around line $n ==="
+              sed -n "$(( n > 20 ? n - 20 : 1 )),$(( n + 35 ))p" build.log
+            fi
+            echo
+            echo "=== last 50 lines ==="
+            tail -50 build.log 2>/dev/null
+          } > build-error.txt
+          git config user.name "build-bot"
+          git config user.email "build-bot@users.noreply.github.com"
+          git add -f build-error.txt
+          git commit -m "build error log" || true
+          git pull --rebase --autostash || true
+          git push || true
+
       - name: Publish APK
         uses: softprops/action-gh-release@v2
         with:
